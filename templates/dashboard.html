@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Welcome post -->
+<div class="post">
+	
+	<div class="l600">
+		<div class="module l600">
+			<div class="btitle">General information</div>
+			<br/>
+					
+			<h3> {{ client.name }}, {{ client.city}}</h3> 
+			<h4><a href="/crm/admin/business/client/{{ client.id }}">Edit client information</a> </h4>
+			
+			<h3> {{ client.address }}</h3>
+			{{ client.information }}
+					
+			
+			
+			
+				 
+		</div>
+		
+		<div class="module l600">
+			<div class="btitle">Station information 
+			<a style="float: right" href="/crm/admin/business/station/add"><img src="/media/img/Station Add.png"/></a></div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+				{% for station in stations %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td class="tiny"><img src="/media/img/Station.png"/></td>
+						<td class="medium"><b><a href="/crm/admin/business/station/{{ station.id }}">{{ station.name }}</a></b></td>
+						<td class="medium">{{ station.local_IP }}</td>
+						<td class="medium">{{ station.type }}</td>
+						<td>{{ station.additional_information }}</td>
+					</tr>	
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="module l300">
+			<div class="btitle">LogikPOS Licences
+			<a style="float: right" href="/crm/admin/business/logikposlicence/add"><img src="/media/img/LogikLicence.png"/></a>
+			</div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+				{% for licence in logikposlicences %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td class="tiny"><img src="/media/img/LogikLicence.png"/></td>
+						<td style="width: 40px">{{ licence.creation_time|date:"d M"}}</td>
+						<td>{{ licence.creator }} {{ licence.tip_pachet }}{{ licence.tip_administrare }}</td>
+						<td><a href="/crm/admin/business/logikposlicence/{{ licence.id }}">{{ licence.licence }}</a></td>	
+					</tr>
+					
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="module l300" style="float: right; width: 280px; margin: 2px 0px 10px 2px ">
+			<div class="btitle">Aldelo licences</div>
+			<br/>
+			
+			
+		</div>
+		
+		<!-- RECENT COMMENTS -->
+		<div class="module l600">
+			<div class="btitle">Comments
+			<a style="float: right" href="/crm/admin/business/comment/add"><img src="/media/img/Comment.png"/></a>
+			</div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+				{% for comment in comments %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td class="tiny"><img src="/media/img/Comment.png"/></td>
+						<td class="medium">{{ comment.datetime|date:"d M, H:m" }}</td>
+						<td>{{ comment.owner }}</td>
+						<td><a href="/crm/admin/business/comment/{{ comment.id }}">{{ comment.text }}</a></td>
+					</tr>	
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		
+		<!-- WORK HOURS -->
+		<div class="module l600">
+			<div class="btitle">Work times
+			<a style="float: right" href="/crm/admin/business/worktime/add"><img src="/media/img/WorkTime.png"/></a>
+			</div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+				{% for worktime in worktimes %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td class="tiny"><img src="/media/img/WorkTime.png"/></td>
+						<td style="width: 40px">{{ worktime.date|date:"d M"}}</td>
+						<td>{{ worktime.person }}</td>
+						<td class="tiny">{{ worktime.hours }}h</td>
+						<td><a href="/crm/admin/business/worktime/{{ worktime.id }}">{{ worktime.description }}</a></td>
+					</tr>	
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		
+	</div>
+	
+	
+	
+	
+	<!-- RIGHT PANEL -->
+	<div class="l300">
+		<!-- User information -->
+		<div class="module l300 userpanel">
+			<div class="btitle">User</div>
+			<br/>
+			Bine ai venit <b>{{ username }}</b>!
+			<br/>
+			<a href="/crm/logout"> Logout</a>
+		</div>
+		<!-- LogikTray -->
+		<div class="module l300" >
+			<div class="btitle">LogikTray</div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+					<tr>
+						<td>IP Address</td>
+						<td><b>{{ logiktray.ip }}</b></td>
+					</tr>	
+					<tr>
+						<td>Last online</td>
+						<td><b>{{ logiktray.last_online|date:"d M, H:m" }}</b></td>
+					</tr>	
+					<tr>
+						<td>Last log upload</td>
+						<td><b>never</b></td>
+					</tr>	
+				</tbody>
+			</table>
+			
+		</div>
+		
+		<!-- Online clients -->
+		<div class="module l300">
+			<div class="btitle">Logins
+			<a style="float: right" href="/crm/admin/business/login/add"><img src="/media/img/Security Add.png"/></a>
+			</div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+				{% for login in logins %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td class="tiny"><img src="/media/img/Security.png"/></td>
+						<td><a href="/crm/admin/business/login/{{ login.id }}">{{ login.username }}</a></td>
+						<td>{{ login.password }}</td>
+					</tr>	
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td></td>
+						<td colspan="2">{{ login.station }} {{ login.description }}</td>
+					</tr>	
+				{% endfor %}
+				</tbody>
+			</table>
+			
+		</div>
+	</div>
+	
+	
+	
+</div>
+{% endblock %}
+
+
+

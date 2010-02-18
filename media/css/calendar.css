@@ -1,0 +1,36 @@
+.date {
+	color: #444;
+	/* float: right;*/
+}
+#month {  width: 100%;}
+#month th { border: 1px solid #888; color:#444;}
+#month td { border: 1px solid #888;}
+#month thead { background-color:#bbb; }
+#month td { min-width: 7em; min-height: 7em; padding: .2em; vertical-align: top; overflow: auto; }
+td .day { 
+	
+	min-width: 7em; 
+	min-height: 6em; 
+	overflow:auto; 
+	margin-top: 0; 
+}
+td {
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+td .entry
+{
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+td .entry:hover {
+	background-color: #e8e8a3;
+}
+#month .today{
+	/* background-color: #7Da3FE;*/
+	border: 2px solid #555;
+}
+#month tbody .weekend { background-color:#ded; }
+#month tbody .next, #month tbody .previous { background-color:#ddd; }
+#month th { font: 1em bold Arial, Helvetica, sans-serif; }
+p {margin-top: 0; }

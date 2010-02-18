@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load adminmedia %}
+{% load i18n %}
+
+{% block extrahead %}
+<script type="text/javascript" src="../../../jsi18n/"></script>
+<script type="text/javascript" src="/media/js/core.js"></script>
+<script type="text/javascript" src="/media/js/admin/RelatedObjectLookups.js"></script>
+
+<script type="text/javascript" src="/media/js/getElementsBySelector.js"></script>
+<script type="text/javascript" src="/media/js/actions.js"></script>
+<script type="text/javascript" src="/media/js/calendar.js"></script>
+
+<script type="text/javascript" src="/media/js/admin/DateTimeShortcuts.js"></script>
+
+<script type="text/javascript">
+<!--
+function switchMenu(obj) {
+	var el = document.getElementById(obj);
+	if ( el.style.display != "none" ) {
+		el.style.display = 'none';
+	}
+	else {
+		el.style.display = '';
+	}
+}
+//-->
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Welcome post -->
+<div class="post">
+	
+	<div class="l900">
+		
+		
+		<div class="module l900">
+			<div class="btitle">List of all clients (click to access dashboard)</div>
+			
+			<div id="toolbar">
+				<form id="changelist-search" action="" method="post">
+					<div><!-- DIV needed for valid HTML -->
+						{{ form.as_p }}
+						
+						
+						<label for="searchbar" style="float : left"><img src="/media/img/search.png" alt="Search" /></label>
+						{{ form.name }}
+						<br/>
+						{{ form.start_date }}<span>&nbsp;<a href="javascript:DateTimeShortcuts.handleCalendarQuickLink(0, 0);">Today</a>&nbsp;|&nbsp;<a id="calendarlink0" href="javascript:DateTimeShortcuts.openCalendar(0);"><img alt="Calendar" src="http://server.logik.ro/media/img/admin/icon_calendar.gif"></a></span>
+
+						{{ form.end_date }}
+						
+						{{ form.search }} <br/>
+						
+						<div class="help">{{ form.search.help_text }} </div>
+						<br/>
+						<input type="submit" value="Filter clients" />					
+						
+						
+						<img style="float: right" src="/media/img/advanced.png" onclick="switchMenu('advanced_filter');"/>
+						<img style="float: right" src="/media/img/save.png" />
+						
+						
+						
+						<div id="advanced_filter" style="display: {% if advanced %}{% else %}none{% endif %}; overflow : auto; padding-top: 20px; border-top: 1px solid #ccc; margin-top:10px">
+							<div class="left "><b>City</b>: </div>
+							<div id="city" class="left ">
+								{{ form.city }}
+							</div>
+							<div class="left "><b>Type</b>: </div>
+							<div id="city" class="left ">
+								{{ form.type }}
+							</div>
+							
+							<div style="clear : both;"> </div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<script type="text/javascript">document.getElementById("searchbar").focus();</script> 
+			
+			
+			<table style="width: 100%">
+			<thead>
+				<tr>
+					<th></th>
+					<th>
+						Name <br/>
+						Company
+					</th>
+					<th>
+						Type
+					</th>
+					<th>
+						City <br/>
+						Subscription
+					</th>
+					<th>
+						Information <br/>
+						Contacts
+					</th>
+				</tr>
+			</thead>
+
+				<tbody>
+				{% for client in clients %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<th class="tiny"><input type="checkbox"></th>
+						<td class="medium"><a href="/crm/dashboard/{{ client.id }}"><b>{{ client.name }}</b></a></td>
+						<td>{{ client.type }} </td>
+						<td>{{ client.city }}</td>
+						<td>{{ client.information }}</td>
+					</tr>
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<th class="tiny"></th>
+						<td colspan="2">{% if client.company %} {{ client.company }} {% endif %}</td>
+						<td >{% if client.subscription %} {{ client.subscription }} {% endif %}</td>
+						<td colspan="2">{% if client.contact %} {{ client.contact }} {% endif %}</td>
+						
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		
+	</div>
+	
+	
+</div>
+{% endblock %}
+
+
+

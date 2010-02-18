@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Welcome post -->
+<div class="post">
+	
+	<div class="l600">
+		<div class="module l600">
+			<div class="btitle">General information</div>
+			<br/>
+			
+			Aici vor fi ceva informatii generale.
+					
+			
+			
+			
+				 
+		</div>
+		
+		<div class="module l600">
+			<div class="btitle">Tickets currently in progress 
+			</div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+				{% for in_progress in in_progresses %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td class="tiny"><img src="/media/img/tag_blue.png"/></td>
+						<td><b><a href="/crm/admin/business/ticket/{{ in_progress.id }}">{{ in_progress.title }}</a></b></td>
+						<td class="medium">{{ in_progress.priority }}</td>
+						<td class="medium">{{ in_progress.due_date }}</td>
+					</tr>	
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="module l600">
+			<div class="btitle">Recently completed tickets
+			</div>
+			<br/>
+			
+		</div>
+		
+		
+		
+		<div class="l600">
+		<p> Mai jos urmeaza o lista cu toate ticket-urile ce exista in momentul curent puse pe categorii (<b>Bugs</b>, <b>New features</b> si <b>Improvements</b>). 
+		Pe masura ce 
+		sunt completate dispar din aceste liste.</p>
+		</div>
+		<!-- BUGS-->
+		<div class="module l600">
+			<div class="btitle">Bugs
+			<a style="float: right" href="/crm/admin/business/ticket/add"><img src="/media/img/tag_red.png"/></a>
+			</div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+				{% for bug in bugs %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td class="tiny"><img src="/media/img/tag_red.png"/></td>
+						<td><a href="/crm/admin/business/ticket/{{ bug.id }}">{{ bug.title }}</a></td>
+						<td class="small">{{ bug.priority }}</td>
+						<td class="small">{{ bug.due_date }}</td>
+					</tr>	
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		
+		<!-- New Features -->
+		<div class="module l600">
+			<div class="btitle">New features tickets
+			<a style="float: right" href="/crm/admin/business/ticket/add"><img src="/media/img/tag_green.png"/></a>
+			</div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+				{% for feature in features %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td class="tiny"><img src="/media/img/tag_green.png"/></td>
+						<td><a href="/crm/admin/business/ticket/{{ feature.id }}">{{ feature.title }}</a></td>
+						<td class="small">{{ feature.priority }}</td>
+						<td class="small">{{ feature.due_date }}</td>
+					</tr>	
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		
+		<!-- Improvements -->
+		<div class="module l600">
+			<div class="btitle">Improvement tickets
+			<a style="float: right" href="/crm/admin/business/ticket/add"><img src="/media/img/tag_blue.png"/></a>
+			</div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+				{% for improvement in improvements %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td class="tiny"><img src="/media/img/tag_blue.png"/></td>
+						<td><a href="/crm/admin/business/ticket/{{ improvement.id }}">{{ improvement.title }}</a></td>
+						<td class="small">{{ improvement.priority }}</td>
+						<td class="small">{{ improvement.due_date }}</td>
+					</tr>	
+				{% endfor %}
+				</tbody>
+			</table>
+			
+			
+		</div>
+		
+		
+	</div>
+	
+	
+	
+	
+	<!-- RIGHT PANEL -->
+	<div class="l300">
+		<!-- User information -->
+		<div class="module l300 userpanel">
+			<div class="btitle">User</div>
+			<br/>
+			Bine ai venit <b>{{ username }}</b>!
+			<br/>
+			<a href="/crm/logout"> Logout</a>
+		</div>
+		
+		<div class="module l300">
+			<div class="btitle">Latest builds
+			<a style="float: right" href="/crm/admin/business/logikposlicence/add"><img src="/media/img/LogikLicence.png"/></a>
+			</div>
+			<br/>
+			
+			Informatii despre ultimele build-uri
+		</div>
+		
+		
+	</div>
+	
+	
+	
+</div>
+{% endblock %}
+
+
+

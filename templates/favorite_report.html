@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h1>Fill in the title of your report</h1>
+<br/>
+<form action="/crm/save_report/" method="POST" style="width: 300px">
+	<input  type="hidden" name="params" value="{{ params }}"/>
+	<input  type="hidden" name="link" value="{{ link }}"/>
+    <table> 
+    	<tr>
+			<td>Title</td>
+			<td> <input type="text" name="title" style="width: 200px" value=""/> </td>
+		</tr>
+		<tr>
+			<td></td>
+			<td> <input type="submit" value="Add to favorites"/> </td>
+		</tr>
+	</table>
+</form
+
+{% endblock %}

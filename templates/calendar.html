@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block css %} 
+<link rel="stylesheet" type="text/css" href="/media/css/ui.dropdownchecklist.css" />
+<link rel="stylesheet" type="text/css" href="/media/css/calendar.css" />
+<script src="/media/js/jquery-1.4.js"></script>
+	<script src="/media/js/forms.js"></script>
+	<script type="text/javascript" src="/media/js/jquery.dynDateTime.js"></script>
+	<script type="text/javascript" src="/media/js/calendar-en.js"></script>
+	
+	<script type="text/javascript" src="/media/js/ui.core-min.js"></script>
+	<script type="text/javascript" src="/media/js/ui.dropdownchecklist-min.js"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ first_day_of_month|date:"M Y" }}</h1>
+
+
+
+<div style="float:left"><a href="/crm/calendar/{{ prev_year }}/{{ prev_month }}"><img src="/media/img/PrevMonth.png"></a></div>
+<div style="float:right"><a href="/crm/calendar/{{ next_year }}/{{ next_month }}"><img src="/media/img/NextMonth.png"></a></div>
+
+<table id="month">
+	<thead>
+		<tr>
+			 <th>Monday</th>
+			 <th>Tuesday</th>
+			 <th>Wednesday</th>
+			 <th>Thursday</th>
+			 <th>Friday</th>
+			 <th class="weekend">Saturday</th>
+			 <th class="weekend">Sunday</th>
+		</tr>
+	</thead>
+
+	{% for week in calendar %}
+	<tr>
+		{% for day in week %}
+		<td class="{% if day.weekend %}weekend {% endif %}{% if not day.in_month %}next {% endif %}{% if day.today %}today {% endif %} entry">
+			<div class="entry">
+			<span class="date">{{ day.day|date:"d M" }}</span>
+			<div class="day">
+				{% for task in day.task_list %}
+					<img src="/media/img/Task.png">
+					<a href="/crm/admin/business/task/{{ task.id }}">{{task.assigned_to }}: {{ task.title }}</a><br/>
+				{% endfor %}
+				{% for reminder in day.reminders %}
+					<img src="/media/img/Bell.png">
+					<a href="/crm/admin/business/reminder/{{ reminder.id }}">{{reminder.person }}: {{ reminder.message }}</a><br/>
+				{% endfor %}
+				{% for ticket in day.tickets %}
+					<img src="/media/img/tag_blue.png">
+					<a href="/crm/admin/business/ticket/{{ ticket.id }}">{{ ticket.title }}</a><br/>
+				{% endfor %}
+			</div>
+			</div>
+		</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+
+<form method="POST" style="height: 60px">
+<div style="float: left">
+ 	<table>
+ 		<tr>
+			<td><img src="/media/img/Task.png"></td>
+			<td style="padding-left: 10px"><input type="checkbox" name="include_tasks" {% if include_tasks %} checked="checked" {% endif %} value="True"/> Tasks</td>
+		</tr>
+		<tr>
+			<td><img src="/media/img/Bell.png"></td>
+			<td style="padding-left: 10px"><input type="checkbox" name="include_reminders" {% if include_reminders %} checked="checked" {% endif %} value="True"/> Reminders</td>
+		</tr>
+		<tr>
+			<td><img src="/media/img/tag_blue.png"></td>
+			<td style="padding-left: 10px"><input type="checkbox" name="include_tickets" {% if include_tickets %} checked="checked" {% endif %} value="True"/> Tickets</td>
+		</tr>
+	</table>
+</div>
+<div style="float: left; margin-left: 50px">
+<strong>Persons:</strong> <br/>
+<select class="list_filter" id="list_filter_user" multiple="multiple" name="user__in">
+ 	{% for value, text, selected in users %}
+  	<option value="{{value}}"
+  	{% ifequal selected "Yes" %} selected {% endifequal %}
+  	>{{ text }}</option>
+  	{% endfor %}
+</select>	
+	
+</div>
+
+<div style="float: left; margin-left: 50px">
+	
+	<input type="submit" value="Filter calendar"/>
+</div>
+
+</form>
+
+
+{% endblock %}

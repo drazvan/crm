@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Welcome post -->
+<div class="post">
+	
+	<div class="l600">
+		<div class="module l600 mainpanel">
+			<div class="btitle">General information</div>
+			<br/>
+					
+			In aceasta zona ar trebui sa punem informatiile cele mai importante sau link-uri catre acestea: <br/>
+			
+			<ul>
+				<li>
+					<a href="/kb"><b>Logik Knowledge Base</b></a> este locul unde vor fi puse informatiile de tip "documentare" (informatii build-uri, feature-uri, explicatii, proceduri, etc.)
+				</li>
+				<li> <a href="#"><b>Ultima versiune de LogikPOS</b></a></li>
+				<li>
+					Orice alte link-uri importante
+				</li>
+			</ul>
+			
+			<br/>
+			<br/>
+			<br/>
+			
+				 
+		</div>
+		
+		<div class="module l600">
+			<div class="btitle">Developement notes</div>
+			<br/>
+					
+			Aici este un fel de news feed care spune la ce lucrez, ce idei mai am, etc. : <br/>
+			<ul>
+			{% for note in notes %}
+			<li>{{ note.text }} </li>
+			{% endfor %}
+			</ul
+			<br/>
+			
+			
+			<strong>Tickets in progress </strong>
+			<table>
+				{% for ticket in tickets %}
+					<tr>
+						<td>
+							<img src="/media/img/tag_blue.png">
+						</td>
+						<td><a href="/crm/admin/business/ticket/{{ticket.id}}">{{ ticket.title }}</a></td>
+					</tr>
+					
+				{% endfor %}
+			</table>
+			
+			<br/>
+			
+				 
+		</div>
+		
+		<div class="module l600">
+			<div class="btitle">Your most important tasks (overdue and next 10 days)</div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+				{% for task in tasks %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td class="tiny"><img src="/media/img/Task.png"/></td>
+						<td class="tiny"><img src="/media/img/priority/{{ task.priority }}.png"/></td>
+						<td class="medium">{{task.due_date}}</td>
+						
+						<td colspan="2"><b><a href="/crm/admin/business/task/{{ task.id }}">{{ task.title }}</a></b></td>
+					</tr>	
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td colspan="2"/>
+						<td class="small">{{ task.type }}</td>
+						<td>{{ task.project }}</td>
+						<td>{{ task.client }} </td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		
+		
+		
+		<!-- RECENT NOTIFICATIONS -->
+		<div class="module l600">
+			<div class="btitle">Recent notifications (last 30 days)</div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+				{% for notification in notifications %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td class="tiny"><img src="/media/img/Clipboard.png"/></td>
+						<td class="medium">{{ notification.datetime|date:"d M, H:m" }}</td>
+						
+						<td><b>{{ notification.title }}</b></td>
+					</tr>	
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td colspan="1"/>
+						<td class="small">{{ notification.owner }}</td>
+						<td colspan="2">
+							{{ notification.description }}
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			
+				
+		</div>
+		
+		<!-- RECENT NOTIFICATIONS -->
+		<div class="module l600">
+			<div class="btitle">Automatic Alerts</div>
+			<br/>
+		</div>
+		
+	</div>
+	
+	
+	
+	
+	<!-- RIGHT PANEL -->
+	<div class="l300">
+		<!-- User information -->
+		<div class="module l300 userpanel">
+			<div class="btitle">User</div>
+			<br/>
+			Bine ai venit <b>{{ username }}</b>!
+			<br/>
+			<a href="/crm/logout"> Logout</a>
+		</div>
+		
+		<!-- Favorite reports -->
+		<div class="module l300" >
+			<div class="btitle">Favorite reports</div>
+			
+			
+			<ul>
+			{% for favorite in favorites %}
+				<li>
+				<a href="{{ favorite.url }}">{{favorite.title}}</a><br>
+				</li>
+			{% endfor %}
+			</ul>
+			
+		</div>
+		<!-- Quick access -->
+		<div class="module l300" >
+			<div class="btitle">Quick access to common tasks</div>
+			<br/>
+			
+			{% include 'quick_links.html' %}
+			
+		</div>
+		<!-- Online clients -->
+		<div class="module l300">
+			<div class="btitle">Online clients</div>
+			<br/>
+			
+			<table style="width: 100%">
+				<tbody>
+				{% for logiktrayclient in logiktrayclients %} 
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td class="tiny"><img src="/media/img/User_online.png"/></td>
+						<td><a href="/crm/dashboard/{{ logiktrayclient.client.id }}">{{ logiktrayclient.client.name }}</a></td>
+					</tr>	
+				{% endfor %}
+				</tbody>
+			</table>
+			
+		</div>
+	</div>
+	
+	
+	
+</div>
+{% endblock %}
+
+
+

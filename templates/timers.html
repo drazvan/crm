@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Welcome post -->
+<div class="post">
+	
+	<div class="l600">
+		
+		<form action="/crm/timers/add" method="POST">
+			<input type="text" name="new_timer_title"/>
+			<input type="submit" value="New timer"/>
+		</form>
+		
+		<div class="module l600">
+			<div class="btitle">List of existing timers</div>	
+				<table style="width: 100%">
+					<thead>
+						<tr>
+							<th></th>
+							<th>
+								Title
+							</th>
+							<th>
+								Hours
+							</th>
+							<th>
+								Last start
+							</th>
+							<th>
+								Description
+							</th>
+							<th></th>
+						</tr>
+					</thead>
+		
+					<tbody>
+					{% for timer in timers %} 
+						<tr class="{% cycle 'row1' 'row2' %}">
+							<th class="tiny"><input type="checkbox"></th>
+							<td><a href="/crm/admin/business/timer/{{ timer.id }}"><b>{{ timer.title }}</b></a></td>
+							<td class="medium">{{ timer.hours }} </td>
+							<td class="medium">{{ timer.last_start }}</td>
+							<td>{{ timer.description }}</td>
+							<td><a href="/crm/timers/stop/{{ timer.id }}">stop</a></td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+				
+	</div>
+	
+	<!-- RIGHT PANEL -->
+	<div class="l300">
+		<!-- User information -->
+		<div class="module l300 userpanel">
+			<div class="btitle">User</div>
+			<br/>
+			Bine ai venit <b>{{ username }}</b>!
+			<br/>
+			<a href="/crm/logout"> Logout</a>
+		</div>
+	</div>
+	
+</div>
+{% endblock %}
+
+
+
